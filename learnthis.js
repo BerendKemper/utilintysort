@@ -111,7 +111,7 @@ measureSort('utilintySort', millionArr, true, 10);
 
 millionArr = generateMillionArray(1000000);
 let sorted = measureSort('utilintySort', millionArr, true, 10);
-measureSort('utilintySort', millionArr, true, 10);
+measureSort('utilintySort', sorted, true, 10);
 
 millionArr = generateMillionArray(100000000);
 measureSort('utilintySort', millionArr, true, 10);
