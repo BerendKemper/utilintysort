@@ -48,191 +48,70 @@ const utilintySort = (list, ascending = true) => {
 
 
 
+const measureSort = (sort, list, ascending, timesTesting) => {
+    let sorted;
+    let high = 0;
+    let low = 1000;
+    let avg = 0;
+    for (let times = 0; times < timesTesting; times++) {
+        if (sort === "utilintySort") {
+            var t0 = performance.now();
+            sorted = utilintySort(list, ascending);
+            var t1 = performance.now() - t0;
+        }
+        if (sort === "Array-sort") {
+            const unsorted = Array.from(list);
+            var t0 = performance.now();
+            sorted = unsorted.sort((a, b) => ascending === true ? a - b : b - a);
+            var t1 = performance.now() - t0;
+        }
+        avg += performance.now() - t0;
+        if (low > t1) low = t1;
+        if (high < t1) high = t1;
+    }
+    console.log(`Test:    ${sort}`);
+    console.log(sorted);
+    console.log('slowest:', high, 'milliseconds');
+    console.log('fastest:', low, 'milliseconds');
+    console.log('avarage:', avg / timesTesting, 'milliseconds\n');
+    console.log('\n');
+    return sorted;
+};
+const generateMillionArray = range => {
+    const millionArr = [];
+    for (let i = 0; i < 1000000; i++) {
+        const rInt = Math.floor(Math.random() * range);
+        millionArr.push(rInt);
+    }
+    return millionArr;
+};
+
+
+
+
+
 // testing array of integers down here
-let millionArr = [];
-for (let i = 0; i < 1000000; i++) {
-    const rInt = Math.floor(Math.random() * 1000);
-    millionArr.push(rInt);
-}
+let millionArr;
 console.log('millionArr (1 million size array of objects):\n', millionArr, '\n');
 console.log('\n');
-let sorted;
-let high;
-let low;
-let avg;
-const timesTesting = 10;
 
 
 
 
 
-high = 0;
-low = 1000;
-avg = 0;
-for (let times = 0; times < timesTesting; times++) {
-    const unsorted = Array.from(millionArr);
-    const t0 = performance.now();
-    sorted = unsorted.sort((a, b) => a - b);
-    const t1 = performance.now() - t0;
-    avg += performance.now() - t0;
-    if (low > t1) low = t1;
-    if (high < t1) high = t1;
-}
-console.log('Test 0:    Array-sort');
-// console.log(sorted);
-console.log('slowest:', high, 'milliseconds');
-console.log('fastest:', low, 'milliseconds');
-console.log('avarage:', avg / timesTesting, 'milliseconds\n');
-console.log('\n');
+millionArr = generateMillionArray(1000);
+measureSort('Array-sort', millionArr, true, 10);
+measureSort('utilintySort', millionArr, true, 10);
 
+millionArr = generateMillionArray(10000);
+measureSort('utilintySort', millionArr, true, 10);
 
+millionArr = generateMillionArray(100000);
+measureSort('utilintySort', millionArr, true, 10);
 
+millionArr = generateMillionArray(1000000);
+let sorted = measureSort('utilintySort', millionArr, true, 10);
+measureSort('utilintySort', millionArr, true, 10);
 
-
-high = 0;
-low = 1000;
-avg = 0;
-for (let times = 0; times < timesTesting; times++) {
-    const t0 = performance.now();
-    sorted = utilintySort(millionArr);
-    const t1 = performance.now() - t0;
-    avg += performance.now() - t0;
-    if (low > t1) low = t1;
-    if (high < t1) high = t1;
-}
-console.log('Test 0:    utilintySort in between range(0-1000)');
-console.log(sorted);
-console.log('slowest:', high, 'milliseconds');
-console.log('fastest:', low, 'milliseconds');
-console.log('avarage:', avg / timesTesting, 'milliseconds\n');
-console.log('\n');
-
-
-
-
-
-millionArr = [];
-for (let i = 0; i < 1000000; i++) {
-    const rInt = Math.floor(Math.random() * 10000);
-    millionArr.push(rInt);
-}
-high = 0;
-low = 1000;
-avg = 0;
-for (let times = 0; times < timesTesting; times++) {
-    const t0 = performance.now();
-    sorted = utilintySort(millionArr);
-    const t1 = performance.now() - t0;
-    avg += performance.now() - t0;
-    if (low > t1) low = t1;
-    if (high < t1) high = t1;
-}
-console.log('Test 1:    utilintySort in between range(0-10000)');
-console.log(sorted);
-console.log('slowest:', high, 'milliseconds');
-console.log('fastest:', low, 'milliseconds');
-console.log('avarage:', avg / timesTesting, 'milliseconds\n');
-console.log('\n');
-
-
-
-
-
-millionArr = [];
-for (let i = 0; i < 1000000; i++) {
-    const rInt = Math.floor(Math.random() * 100000);
-    millionArr.push(rInt);
-}
-high = 0;
-low = 1000;
-avg = 0;
-for (let times = 0; times < timesTesting; times++) {
-    const t0 = performance.now();
-    sorted = utilintySort(millionArr);
-    const t1 = performance.now() - t0;
-    avg += performance.now() - t0;
-    if (low > t1) low = t1;
-    if (high < t1) high = t1;
-}
-console.log('Test 2:    utilintySort in between range(0-100000)');
-console.log(sorted);
-console.log('slowest:', high, 'milliseconds');
-console.log('fastest:', low, 'milliseconds');
-console.log('avarage:', avg / timesTesting, 'milliseconds\n');
-console.log('\n');
-
-
-
-
-
-millionArr = [];
-for (let i = 0; i < 1000000; i++) {
-    const rInt = Math.floor(Math.random() * 1000000);
-    millionArr.push(rInt);
-}
-high = 0;
-low = 1000;
-avg = 0;
-for (let times = 0; times < timesTesting; times++) {
-    const t0 = performance.now();
-    sorted = utilintySort(millionArr);
-    const t1 = performance.now() - t0;
-    avg += performance.now() - t0;
-    if (low > t1) low = t1;
-    if (high < t1) high = t1;
-}
-console.log('Test 3:    utilintySort in between range(0-1000000)');
-console.log(sorted);
-console.log('slowest:', high, 'milliseconds');
-console.log('fastest:', low, 'milliseconds');
-console.log('avarage:', avg / timesTesting, 'milliseconds\n');
-console.log('\n');
-
-
-
-
-
-millionArr = sorted;
-high = 0;
-low = 1000;
-avg = 0;
-for (let times = 0; times < timesTesting; times++) {
-    const t0 = performance.now();
-    sorted = utilintySort(millionArr, false);
-    const t1 = performance.now() - t0;
-    avg += performance.now() - t0;
-    if (low > t1) low = t1;
-    if (high < t1) high = t1;
-}
-console.log('Test 4:    utilintySort already sorted array in between range(0-1000000)');
-console.log(sorted);
-console.log('slowest:', high, 'milliseconds');
-console.log('fastest:', low, 'milliseconds');
-console.log('avarage:', avg / timesTesting, 'milliseconds\n');
-console.log('\n');
-
-
-
-
-
-millionArr = [];
-for (let i = 0; i < 1000000; i++) {
-    const rInt = Math.floor(Math.random() * 100000000);
-    millionArr.push(rInt);
-}
-high = 0;
-low = 1000;
-avg = 0;
-for (let times = 0; times < timesTesting; times++) {
-    const t0 = performance.now();
-    sorted = utilintySort(millionArr);
-    const t1 = performance.now() - t0;
-    avg += performance.now() - t0;
-    if (low > t1) low = t1;
-    if (high < t1) high = t1;
-}
-console.log('Test 5:    utilintySort in between range(0-100000000)');
-console.log(sorted);
-console.log('slowest:', high, 'milliseconds');
-console.log('fastest:', low, 'milliseconds');
-console.log('avarage:', avg / timesTesting, 'milliseconds\n');
+millionArr = generateMillionArray(100000000);
+measureSort('utilintySort', millionArr, true, 10);
