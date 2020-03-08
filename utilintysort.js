@@ -188,7 +188,7 @@ const UtilintySort = function () {
         }
         const nextprops = properties.slice(1);
         const sorted = [];
-        const generateDynamiclyOrderedArrayFromSortedObjectAlgorithm = (sortedObjFirst, sortedObjSecond) => {
+        const sortedLoop = (sortedObjFirst, sortedObjSecond) => {
             const sortedArraysFirst = Object.values(sortedObjFirst);
             for (let int = sortedArraysFirst.length - 1; int >= 0; int--) {
                 let sortedArrayFirst = sortedArraysFirst[int];
@@ -206,9 +206,9 @@ const UtilintySort = function () {
             }
         };
         if (order === 1)
-            generateDynamiclyOrderedArrayFromSortedObjectAlgorithm(sortedObjMin, sortedObjPlus);
+            sortedLoop(sortedObjMin, sortedObjPlus);
         else
-            generateDynamiclyOrderedArrayFromSortedObjectAlgorithm(sortedObjPlus, sortedObjMin);
+            sortedLoop(sortedObjPlus, sortedObjMin);
         return sorted;
     };
 
