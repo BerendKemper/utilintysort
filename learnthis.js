@@ -77,9 +77,9 @@ const measureSort = (sort, list, ascending, timesTesting) => {
     console.log('\n');
     return sorted;
 };
-const generateMillionArray = range => {
+const generateRandomArray = (size, range) => {
     const millionArr = [];
-    for (let i = 0; i < 1000000; i++) {
+    for (let i = 0; i < size; i++) {
         const rInt = Math.floor(Math.random() * range);
         millionArr.push(rInt);
     }
@@ -99,19 +99,19 @@ console.log('\n');
 
 
 
-millionArr = generateMillionArray(1000);
+millionArr = generateRandomArray(1000000, 1000);
 measureSort('Array-sort', millionArr, true, 10);
 measureSort('utilintySort', millionArr, true, 10);
 
-millionArr = generateMillionArray(10000);
+millionArr = generateRandomArray(1000000, 10000);
 measureSort('utilintySort', millionArr, true, 10);
 
-millionArr = generateMillionArray(100000);
+millionArr = generateRandomArray(1000000, 100000);
 measureSort('utilintySort', millionArr, true, 10);
 
-millionArr = generateMillionArray(1000000);
+millionArr = generateRandomArray(1000000, 1000000);
 let sorted = measureSort('utilintySort', millionArr, true, 10);
 measureSort('utilintySort', sorted, true, 10);
 
-millionArr = generateMillionArray(100000000);
+millionArr = generateRandomArray(1000000, 100000000);
 measureSort('utilintySort', millionArr, true, 10);
