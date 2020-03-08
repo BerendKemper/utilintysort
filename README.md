@@ -1,7 +1,7 @@
 # utilintySort
-An alternative sorting algorithm (by Berend Kemper). 
-This is my first real project and helped me to learn JavaScript.
-Now this repository is used for my documentations purpose.
+An alternative sorting algorithm (by Berend Kemper).<br>
+This is my first real project and helped me to learn JavaScript. Now this repository is used for my documentations purpose.<br>
+The utilintySort function contains a lot of code and therefore is best fit for large Arrays like million sized.<br><br>
 
 <b>Files</b>
 - <b>learnthis.js</b>
