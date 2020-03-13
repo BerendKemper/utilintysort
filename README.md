@@ -9,6 +9,10 @@ Now this repository's purpose is for my research into performance and an example
   - Can sort ascending (true) or descending (false).
   - This file is an example of the core-mechanics from the <b>utilintysort.js</b>.
   - Contains performance-tests and when the utilintySort works <b>very fast</b> and when <b>very slow</b>.
+- <b>browser-overload.js</b>:
+  - The second half from core-mechanics have been commented to inspect only the first part.
+  - Inspect the function generateOverloadArray to understand what makes an brwoser overload.
+  - Contains the interesting phenomenon that shows when the browser overloads.
 - <b>utilintysort.js</b>: 
   - Takes in an Array of Objects and sorts Object-keys of integer-properties (only). 
   - Can add multiple properties to sort in order. 
