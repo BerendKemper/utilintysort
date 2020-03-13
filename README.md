@@ -1,8 +1,7 @@
 # utilintySort
 An alternative sorting algorithm (by Berend Kemper).<br>
 This is my first real project and helped me to learn JavaScript.<br> 
-Now this repository is used for my documentations purpose.<br>
-The core-function from the <b>utilintysort.js</b> is made of a lot of code and therefore excels when used on large Arrays primarily at a hundred sized- and especially up to a million sized Array. Also Object-keys have another unclear disadvantage demonstrated in <b>learnthis.js</b>.<br><br>
+Now this repository's purpose is for my research into performance and an example to something that looks like browser-overloading. The The core-function from the <b>utilintysort.js</b> is sorting method that work very fast but it also has introduced me to some very interesting disadvantageous phenomenon that will help me understand JavaScript better.<br><br>
 
 <b>Files</b>:
 - <b>learnthis.js</b>:
