@@ -4,7 +4,7 @@ This is my first real project and helped me to learn JavaScript.<br>
 Now this repository's purpose is for my research into performance and an example to something that looks like browser-overloading. The The core-function from the <b>utilintysort.js</b> is sorting method that work very fast but it also has introduced me to some very interesting disadvantageous phenomenon that will help me understand JavaScript better.<br><br>
 
 <b>Files</b>:
-- <b>learnthis.js</b>:
+- <b>weakness.js</b>:
   - The utilintySort function sorts an Array of integers (only).
   - Can sort ascending (true) or descending (false).
   - This file is an example of the core-mechanics from the <b>utilintysort.js</b>.
