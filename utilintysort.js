@@ -364,7 +364,7 @@ for (let i = 0; i < timesTesting; i++) {
 }
 console.log('Test 2:    utilintySort');
 console.log('           Sorting 9 properties (cash-, gems-, lvl+, stLvl+, rankPs-, age+, length-, weight+, id+)');
-// console.log(sorted);
+console.log(sorted);
 console.log('slowest:', high, 'milliseconds');
 console.log('fastest:', low, 'milliseconds');
 console.log('avarage:', avg / timesTesting, 'milliseconds\n');
