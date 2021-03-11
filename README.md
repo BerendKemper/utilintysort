@@ -62,7 +62,9 @@ This was my first real software development project and my own initiative to bec
 </ul>
 <h3>properties.delete(name)</h3>
 <ul>
-	<code>name</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type">&lt;string&gt;</a>
+	<li>
+		<code>name</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type">&lt;string&gt;</a>
+	</li>
 </ul>
 <h3>properties.get(name)</h3>
 <h3>properties.ix(index)</h3>
