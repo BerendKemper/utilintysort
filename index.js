@@ -1,5 +1,4 @@
 'use strict';
-
 const UtilintySort = function () {
 	let _resetPropertyStatistics = false;
 	const accessKey = Symbol("UtilintySort Access Key");
@@ -92,7 +91,6 @@ const UtilintySort = function () {
 			this.#sortIndex = index;
 		};
 	};
-
 	class Properties {
 		#propertiesList = [];
 		#propertiesDict = {};
@@ -143,11 +141,6 @@ const UtilintySort = function () {
 			return this.#propertiesList;
 		};
 	};
-
-
-
-
-
 	const utilintySort = (order, list, properties) => {
 		const property = properties[0];
 		property.counter++;
@@ -196,11 +189,6 @@ const UtilintySort = function () {
 			sortedLoop(sortedObjPlus, sortedObjMin);
 		return sorted;
 	};
-
-
-
-
-
 	class UtilintySort {
 		constructor(list) {
 			if (!Array.isArray(list))
@@ -223,166 +211,3 @@ const UtilintySort = function () {
 	};
 	return UtilintySort;
 }();
-
-
-
-
-
-// testing array of objects down here
-const gazillionArr = [];
-for (let id = 0; id < 1000000; id++) {
-	const rndmRankPoints = Math.ceil(Math.random() * 100);
-	const rndmRank = Math.ceil((101 - rndmRankPoints) / 10);
-	const rndmLevel = Math.ceil(Math.random() * 300);
-	const rndmCash = 10 * Math.ceil((Math.random() * 500));
-
-	const rndmStoryLevel = Math.ceil((rndmLevel / 6) + Math.random() * 51);
-	const rndmGems = rndmLevel + rndmStoryLevel - 5 * Math.ceil(Math.random() * Math.floor((rndmLevel + rndmStoryLevel) / 5));
-
-	const rndmAge = Math.ceil(18 + Math.random() * 23);
-	const rndmLength = Math.ceil(160 + Math.random() * 45);
-	const rndmWeight = Math.ceil(rndmLength - 120 + Math.random() * 45);
-	const rndmNameLen = Math.ceil(4 + Math.random() * 5);
-	let rndmName = '';
-	for (let ix = 0; ix <= rndmNameLen; ix++) {
-		const rndmAscii = Math.ceil(96 + Math.random() * 26);
-		rndmName += String.fromCharCode(rndmAscii);
-	}
-	gazillionArr.push({
-		rank: rndmRank, rankPs: rndmRankPoints, lvl: rndmLevel,
-		id: id, cash: rndmCash, stLvl: rndmStoryLevel, gems: rndmGems,
-		age: rndmAge, length: rndmLength, weight: rndmWeight, name: rndmName
-	});
-}
-console.log('gazillionArr (1 million size array of objects):\n', gazillionArr, '\n');
-console.log('\n');
-const utilintySort = new UtilintySort(gazillionArr);
-let sorted;
-let high;
-let low;
-let avg;
-const timesTesting = 5;
-
-
-
-
-
-// Test 0: utilintySort 1 property
-utilintySort.properties.add('cash').ascending = -1; // 1st property
-//*
-high = 0;
-low = 1000;
-avg = 0;
-for (let i = 0; i < timesTesting; i++) {
-	const t0 = performance.now();
-	sorted = utilintySort.sort();
-	const t1 = performance.now() - t0;
-	avg += t1;
-	if (low > t1) low = t1;
-	if (high < t1) high = t1;
-}
-console.log('Test 0:    utilintySort');
-console.log('           Sorting 1 property (cash-)');
-// console.log(sorted);
-console.log('slowest:', high, 'milliseconds');
-console.log('fastest:', low, 'milliseconds');
-console.log('avarage:', avg / timesTesting, 'milliseconds\n');
-console.log('\n');
-//*/
-
-
-
-
-
-// Test 1: Array-sort 1 property
-//*
-high = 0;
-low = 1000;
-avg = 0;
-for (let i = 0; i < timesTesting; i++) {
-	const unsorted = Array.from(gazillionArr);
-	const t0 = performance.now();
-	sorted = unsorted.sort((a, b) => b.cash - a.cash);
-	const t1 = performance.now() - t0;
-	avg += t1;
-	if (low > t1) low = t1;
-	if (high < t1) high = t1;
-}
-console.log('Test 1:    Array-sort');
-console.log('           Sorting 1 property (cash-)');
-// console.log(sorted);
-console.log('slowest:', high, 'milliseconds');
-console.log('fastest:', low, 'milliseconds');
-console.log('avarage:', avg / timesTesting, 'milliseconds\n');
-console.log('\n');
-//*/
-
-
-
-
-
-// Test 2: utilintySort 9 properties
-utilintySort.properties.add('gems').ascending = -1; // 2nd property
-utilintySort.properties.add('lvl'); // 3rd property
-utilintySort.properties.add('stLvl'); // 4th property
-utilintySort.properties.add('rankPs').ascending = -1; // 5th property
-utilintySort.properties.add('age'); // 6th property
-utilintySort.properties.add('length').ascending = -1; // 7th property
-utilintySort.properties.add('weight'); // 8th property
-utilintySort.properties.add('id'); // 9th property
-//*
-high = 0;
-low = 1000;
-avg = 0;
-for (let i = 0; i < timesTesting; i++) {
-	const t0 = performance.now();
-	sorted = utilintySort.sort();
-	const t1 = performance.now() - t0;
-	avg += t1;
-	if (low > t1) low = t1;
-	if (high < t1) high = t1;
-}
-console.log('Test 2:    utilintySort');
-console.log('           Sorting 9 properties (cash-, gems-, lvl+, stLvl+, rankPs-, age+, length-, weight+, id+)');
-console.log(sorted);
-console.log('slowest:', high, 'milliseconds');
-console.log('fastest:', low, 'milliseconds');
-console.log('avarage:', avg / timesTesting, 'milliseconds\n');
-console.log('\n');
-//*/
-
-
-
-
-// Test 3: utilintySort 9 properties with ranges
-utilintySort.properties.get('lvl').setRange(200, 300); // (ascending = 1 OR 200<=lvl<=300)
-utilintySort.properties.get('cash').setRange(5000, 2500); // (ascending = -1 OR 5000<=lvl<=2500)
-utilintySort.properties.get('age').setValue(26); // (ascending = 0 OR 26=age=26 AND sortIndex 6th->1st)
-//*
-high = 0;
-low = 1000;
-avg = 0;
-for (let i = 0; i < timesTesting; i++) {
-	const t0 = performance.now();
-	sorted = utilintySort.sort();
-	const t1 = performance.now() - t0;
-	avg += t1;
-	if (low > t1) low = t1;
-	if (high < t1) high = t1;
-}
-console.log('Test 3:    utilintySort');
-console.log('           Sorting 9 properties by value and range (age===26, 5000<=cash<=2500, gems-, 200<=lvl<=300, stLvl+, rankPs-, length-, weight+, id+)');
-console.log(sorted);
-console.log('slowest:', high, 'milliseconds');
-console.log('fastest:', low, 'milliseconds');
-console.log('avarage:', avg / timesTesting, 'milliseconds');
-console.log('\n\n');
-//*/
-utilintySort.properties.ix(7).setValue(60);
-utilintySort.properties.ix(1).setRange(10, 20);
-
-
-
-console.log(utilintySort);
-
-
