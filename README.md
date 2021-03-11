@@ -12,12 +12,7 @@ This was my first real software development project and my own initiative to bec
 		</summary>
 		The array must contain items of the type <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">&lt;Object&gt;</a>. Those can be instances from a class or raw objects.
 	</details>
-	<details>
-		<summary>
-			Returns <code>utilintySort</code>
-		</summary>
-		Creates a <code>utilintySort</code> instance.
-	</details>
+	<li>Returns <code>utilintySort</code></li>
 </ul>
 <h3>utilintySort.sort()</h3>
 <ul>
