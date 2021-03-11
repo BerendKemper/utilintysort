@@ -64,7 +64,7 @@ The method sorts the <code>list</code>. Throws an error if there are no <code>pr
 	</details>
 	<details>
 		<summary>
-			Returns property
+			Returns <code>property</code>
 		</summary>
 		Allows chaining operations on the property after being created.
 	</details>
@@ -86,7 +86,7 @@ The method sorts the <code>list</code>. Throws an error if there are no <code>pr
 	</details>
 	<details>
 		<summary>
-			Returns property
+			Returns <code>property</code>
 		</summary>
 		Allows chaining operations on the property after being created.
 	</details>
@@ -100,7 +100,7 @@ The method sorts the <code>list</code>. Throws an error if there are no <code>pr
 	</details>
 	<details>
 		<summary>
-			Returns property
+			Returns <code>property</code>
 		</summary>
 		Allows chaining operations on the property after being created.
 	</details>
@@ -141,7 +141,7 @@ The method sorts the <code>list</code>. Throws an error if there are no <code>pr
 	</details>
 	<details>
 		<summary>
-			Returns property
+			Returns <code>property</code>
 		</summary>
 		Allows chaining operations on the property after being setting range.
 	</details>
@@ -156,7 +156,7 @@ The method sorts the <code>list</code>. Throws an error if there are no <code>pr
 	</details>
 	<details>
 		<summary>
-			Returns property
+			Returns <code>property</code>
 		</summary>
 		Allows chaining operations on the property after being setting range.
 	</details>
