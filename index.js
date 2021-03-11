@@ -1,6 +1,5 @@
 'use strict';
 const UtilintySort = function () {
-	let _resetPropertyStatistics = false;
 	const accessKey = Symbol("UtilintySort Access Key");
 	class Property {
 		#lowerbound = -Infinity;
@@ -15,6 +14,25 @@ const UtilintySort = function () {
 			this.#parent = parent;
 			this.#name = name;
 			this.#sortIndex = parent.length;
+		};
+		setRange(lowerbound, upperbound) {
+			if (typeof lowerbound !== "number")
+				throw new TypeError(`The lowerbound "${lowerbound}" must be a number`);
+			if (typeof upperbound !== "number")
+				throw new TypeError(`The upperbound "${upperbound}" must be a number`);
+			if (lowerbound === upperbound)
+				return this.setValue(lowerbound);
+			this.#lowerbound = lowerbound;
+			this.#upperbound = upperbound;
+			this.#ascending = lowerbound < upperbound ? 1 : -1;
+			return this;
+		};
+		setValue(integer) {
+			if (!Number.isInteger(integer))
+				throw new TypeError(`This is the Util-int-y sort. The value "${integer}" must be an integer`);
+			this.#lowerbound = integer;
+			this.#upperbound = integer;
+			this.#ascending = 0;
 		};
 		get name() {
 			return this.#name;
@@ -40,25 +58,6 @@ const UtilintySort = function () {
 		};
 		get upperbound() {
 			return this.#upperbound;
-		};
-		setRange(lowerbound, upperbound) {
-			if (typeof lowerbound !== "number")
-				throw new TypeError(`The lowerbound "${lowerbound}" must be a number`);
-			if (typeof upperbound !== "number")
-				throw new TypeError(`The upperbound "${upperbound}" must be a number`);
-			if (lowerbound === upperbound)
-				return this.setValue(lowerbound);
-			this.#lowerbound = lowerbound;
-			this.#upperbound = upperbound;
-			this.#ascending = lowerbound < upperbound ? 1 : -1;
-			return this;
-		};
-		setValue(value) {
-			if (!Number.isInteger(value))
-				throw new TypeError(`This is the Util-int-y sort. The value "${value}" must be an integer`);
-			this.#lowerbound = value;
-			this.#upperbound = value;
-			this.#ascending = 0;
 		};
 		get sortIndex() {
 			return this.#sortIndex;
@@ -92,8 +91,12 @@ const UtilintySort = function () {
 		};
 	};
 	class Properties {
+		#parent;
 		#propertiesList = [];
 		#propertiesDict = {};
+		constructor(parent) {
+			this.#parent = parent;
+		};
 		add(name) {
 			if (this.#propertiesDict[name] instanceof Property === false) {
 				var property = new Property(this, name);
@@ -123,8 +126,9 @@ const UtilintySort = function () {
 		get list() {
 			const _arrPropertiesRanges = [];
 			const _arrPropertiesValues = [];
+			const resetPropertiesStatistics = this.#parent.resetPropertiesStatistics;
 			for (const property of this.#propertiesList) {
-				if (_resetPropertyStatistics === true) {
+				if (resetPropertiesStatistics === true) {
 					property.counter = 0;
 					property.sorted = 0;
 				}
@@ -190,23 +194,40 @@ const UtilintySort = function () {
 		return sorted;
 	};
 	class UtilintySort {
+		#list;
+		#properties;
+		#resetPropertiesStatistics = false
 		constructor(list) {
-			if (!Array.isArray(list))
-				throw new TypeError('list must be an Array');
 			this.list = list;
-			this.properties = new Properties();
-		};
-		measureSort() {
-			const start = performance.now();
-			const sorted = this.sort();
-			console.log('', performance.now() - start);
-			return sorted;
+			this.#properties = new Properties(this);
 		};
 		sort() {
-			_resetPropertyStatistics = true;
-			const properties = this.properties.list;
-			_resetPropertyStatistics = false;
-			return utilintySort(1, this.list, properties);
+			if (this.#properties.length === 0)
+				throw new Error("Configure properties how to sort");
+			this.#resetPropertiesStatistics = true;
+			const properties = this.#properties.list;
+			this.#resetPropertiesStatistics = false;
+			return utilintySort(1, this.#list, properties);
+		};
+		measureSort(label = "Measuring utilintySort time") {
+			console.time(label);
+			const sorted = this.sort();
+			console.timeEnd(label);
+			return sorted;
+		};
+		get list() {
+			return this.#list;
+		};
+		set list(list) {
+			if (!Array.isArray(list))
+				throw new TypeError('list must be an Array');
+			this.#list = list;
+		};
+		get properties() {
+			return this.#properties;
+		};
+		get resetPropertiesStatistics() {
+			return this.#resetPropertiesStatistics;
 		};
 	};
 	return UtilintySort;
