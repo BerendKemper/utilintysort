@@ -225,4 +225,3 @@ ________________________________________________________________________________
 The image down here shows the performance test from <b>utilintysort.js</b> and compares it to the Array.sort((a, b) => a-b) method
 _______________________________________________________________________________________________________________________
 ![alt text](https://pbs.twimg.com/media/EwKUN0iXYAMw2Ev?format=png&name=large)
-
