@@ -69,34 +69,19 @@ The method sorts the <code>list</code>. Throws an error if there are no <code>pr
 		Allows chaining operations on the property after being created.
 	</details>
 </ul>
-<h3>properties.delete(name)</h3>
+<h3>properties.delete(id)</h3>
 <ul>
 	<details>
 		<summary>
-			<code>name</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type">&lt;string&gt;</a>
+			<code>id</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type">&lt;number&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type">&lt;string&gt;</a>
 		</summary>
 	</details>
 </ul>
-<h3>properties.get(name)</h3>
+<h3>properties.get(id)</h3>
 <ul>
 	<details>
 		<summary>
-			<code>name</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type">&lt;string&gt;</a>
-		</summary>
-	</details>
-	<details>
-		<summary>
-			Returns <code>property</code>
-		</summary>
-		Allows chaining operations on the property after being created.
-	</details>
-</ul>
-<h3>properties.ix(index)</h3>
-<ul>
-	<details>
-		<summary>
-			<code>index</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type">&lt;number&gt;</a>
-		</summary>
+			<code>id</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type">&lt;number&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type">&lt;string&gt;</a>
 	</details>
 	<details>
 		<summary>

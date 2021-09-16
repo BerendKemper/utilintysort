@@ -50,10 +50,12 @@ const UtilintySort = function () {
                 value = -1;
             else if (value !== -1 && value !== 1)
                 throw new TypeError(`The entered ${typeof value} value "${value}" is not -1 / false (descending) or 1 / true (ascending)`);
-            this.#ascending = value;
-            value = this.#upperbound;
-            this.#lowerbound = this.#upperbound;
-            this.#upperbound = value;
+            if (this.#ascending !== value) {
+                this.#ascending = value;
+                value = this.#upperbound;
+                this.#lowerbound = this.#upperbound;
+                this.#upperbound = value;
+            }
         }
         get lowerbound() {
             return this.#lowerbound;
