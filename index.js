@@ -111,7 +111,6 @@ const UtilintySort = function () {
             this.#parent = parent;
         }
         add(name) {
-            console.log(this, name);
             name = "." + name;
             return this.#propertiesList[name] instanceof Property ? this.#propertiesList[name] : new Property(name, this.#propertiesList);
         }
