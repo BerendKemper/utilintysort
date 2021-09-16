@@ -44,17 +44,17 @@ const UtilintySort = function () {
         set ascending(value) {
             if (this.#ascending === 0)
                 throw new TypeError(`There is no ascending or descending possible in between ${this.#lowerbound}-${this.#upperbound}`);
-            if (value === true)
-                value = 1;
-            else if (value === false)
-                value = -1;
-            else if (value !== -1 && value !== 1)
-                throw new TypeError(`The entered ${typeof value} value "${value}" is not -1 / false (descending) or 1 / true (ascending)`);
-            if (this.#ascending !== value) {
+            else if (this.#ascending !== value) {
+                if (value === true)
+                    value = 1;
+                else if (value === false)
+                    value = -1;
+                else if (value !== -1 && value !== 1)
+                    throw new TypeError(`The entered ${typeof value} value "${value}" is not -1 / false (descending) or 1 / true (ascending)`);
                 this.#ascending = value;
-                value = this.#upperbound;
+                const temp = this.#lowerbound;
                 this.#lowerbound = this.#upperbound;
-                this.#upperbound = value;
+                this.#upperbound = temp;
             }
         }
         get lowerbound() {
@@ -129,8 +129,7 @@ const UtilintySort = function () {
         destroy() {
             this.#propertiesList.length = 0;
             for (const name in this.#propertiesList)
-                this.#propertiesList[name].delete()
-            this.#propertiesList.this.#propertiesList.forEach(property => property.delete());
+                this.#propertiesList[name].delete();
         }
         get list() {
             const _arrPropertiesRanges = [];
