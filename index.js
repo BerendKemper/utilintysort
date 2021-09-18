@@ -5,7 +5,8 @@ const UtilintySort = function () {
         #upperbound = Infinity;
         #propertiesList = null;
         #sortIndex = null;
-        #sortMap = null;
+        #filter = false;
+        #intMap = null;
         #ascending = 1;
         #type = "int";
         #name = null;
@@ -28,6 +29,7 @@ const UtilintySort = function () {
             this.#lowerbound = lowerbound;
             this.#upperbound = upperbound;
             this.#ascending = lowerbound < upperbound ? 1 : -1;
+            this.#filter = ((lowerbound !== Infinity && lowerbound !== -Infinity) || (upperbound !== Infinity && upperbound !== -Infinity)) ? true : false;
             return this;
         }
         setValue(integer) {
@@ -36,6 +38,7 @@ const UtilintySort = function () {
             this.#lowerbound = integer;
             this.#upperbound = integer;
             this.#ascending = 0;
+            this.#filter = true;
             return this;
         }
         get name() {
@@ -47,9 +50,12 @@ const UtilintySort = function () {
         set type(type) {
             if (type === "str" || type === "int") {
                 if (this.#type === "map")
-                    this.#sortMap = null;
+                    this.#intMap = null;
                 this.#type = type;
             }
+        }
+        get filter() {
+            return this.#filter;
         }
         get ascending() {
             return this.#ascending;
@@ -100,15 +106,15 @@ const UtilintySort = function () {
             this.#propertiesList[index] = this;
             this.#sortIndex = index;
         }
-        get sortMap() {
-            return this.#sortMap;
+        get intMap() {
+            return this.#intMap;
         }
-        set sortMap(map) {
+        set intMap(map) {
             if (Object.prototype.toString.call(map) === "[object Object]") {
                 for (const key in map)
-                    if (!Number.isInteger(typeof map[key]))
-                        throw new TypeError(`A sort map cannot contain non-integer values: ${key} - ${map[key]}`);
-                this.#sortMap = map;
+                    if (!Number.isInteger(map[key]))
+                        throw new TypeError(`An int-map cannot contain non-integer values: ${key} - ${map[key]}`);
+                this.#intMap = map;
                 this.#type = "map";
             }
         }
@@ -156,23 +162,22 @@ const UtilintySort = function () {
                 this.#propertiesList[name].delete();
         }
         get list() {
-            const _arrPropertiesRanges = [];
-            const _arrPropertiesValues = [];
+            const properties = [];
             const resetPropertiesStatistics = this.#parent.resetPropertiesStatistics;
             for (const property of this.#propertiesList) {
                 if (resetPropertiesStatistics === true) {
                     property.counter = 0;
                     property.sorted = 0;
                 }
-                property.ascending === 0 ? _arrPropertiesValues.push(property) : _arrPropertiesRanges.push(property);
+                properties.push(property);
             }
-            return [..._arrPropertiesValues, ..._arrPropertiesRanges];
+            return properties;
         }
         get length() {
             return this.#propertiesList.length;
         }
     }
-    function sortedLoop(sortedObjFirst, sortedObjSecond, ascending, sorted, nextprops) {
+    function intLoop(sortedObjFirst, sortedObjSecond, ascending, sorted, nextprops) {
         const utilSort = nextprops.length > 0 ? util___Sort[nextprops[0].type] : null;
         const sortedArraysFirst = Object.values(sortedObjFirst);
         for (let int = sortedArraysFirst.length - 1; int >= 0; int--) {
@@ -201,49 +206,37 @@ const UtilintySort = function () {
             const sortedObjPlus = {};
             const sortedObjMin = {};
             const name = property.name;
-            const lowerbound = property.lowerbound;
-            const upperbound = property.upperbound;
             for (let ix = 0; ix < list.length; ix++) {
                 const object = list[ix];
                 const int = object[name];
-                if ((ascending === -1 && int >= upperbound && int <= lowerbound) ||
-                    (ascending === 1 && int >= lowerbound && int <= upperbound) ||
-                    (ascending === 0 && int === lowerbound)) {
-                    int >= 0
-                        ? sortedObjPlus[int] === undefined ? sortedObjPlus[int] = [object] : sortedObjPlus[int].push(object)
-                        : sortedObjMin[-int] === undefined ? sortedObjMin[-int] = [object] : sortedObjMin[-int].push(object);
-                }
+                int >= 0
+                    ? sortedObjPlus[int] === undefined ? sortedObjPlus[int] = [object] : sortedObjPlus[int].push(object)
+                    : sortedObjMin[-int] === undefined ? sortedObjMin[-int] = [object] : sortedObjMin[-int].push(object);
             }
             return order === 1
-                ? sortedLoop(sortedObjMin, sortedObjPlus, ascending, [], properties.slice(1))
-                : sortedLoop(sortedObjPlus, sortedObjMin, ascending, [], properties.slice(1));
+                ? intLoop(sortedObjMin, sortedObjPlus, ascending, [], properties.slice(1))
+                : intLoop(sortedObjPlus, sortedObjMin, ascending, [], properties.slice(1));
         },
-        map() { // work in progress
-            return [];
-            // const property = properties[0];
-            // property.counter++;
-            // property.sorted += list.length;
-            // let ascending = property.ascending;
-            // ascending !== 0 ? order *= ascending : ascending = 1;
-            // const sortedObjPlus = {};
-            // const sortedObjMin = {};
-            // const sortMap = property.sortMap;
-            // const lowerbound = property.lowerbound;
-            // const upperbound = property.upperbound;
-            // for (let ix = 0; ix < list.length; ix++) {
-            //     const object = list[ix];
-            //     const int = object[name];
-            //     if ((ascending === -1 && int >= upperbound && int <= lowerbound) ||
-            //         (ascending === 1 && int >= lowerbound && int <= upperbound) ||
-            //         (ascending === 0 && int === lowerbound)) {
-            //         int >= 0
-            //             ? sortedObjPlus[int] === undefined ? sortedObjPlus[int] = [object] : sortedObjPlus[int].push(object)
-            //             : sortedObjMin[-int] === undefined ? sortedObjMin[-int] = [object] : sortedObjMin[-int].push(object);
-            //     }
-            // }
-            // return order === 1
-            //     ? sortedLoop(sortedObjMin, sortedObjPlus, ascending, [], properties.slice(1))
-            //     : sortedLoop(sortedObjPlus, sortedObjMin, ascending, [], properties.slice(1));
+        map(order, list, properties) {
+            const property = properties[0];
+            property.counter++;
+            property.sorted += list.length;
+            let ascending = property.ascending;
+            ascending !== 0 ? order *= ascending : ascending = 1;
+            const sortedObjPlus = {};
+            const sortedObjMin = {};
+            const name = property.name;
+            const intMap = property.intMap;
+            for (let ix = 0; ix < list.length; ix++) {
+                const object = list[ix];
+                const int = intMap[object[name]];
+                int >= 0
+                    ? sortedObjPlus[int] === undefined ? sortedObjPlus[int] = [object] : sortedObjPlus[int].push(object)
+                    : sortedObjMin[-int] === undefined ? sortedObjMin[-int] = [object] : sortedObjMin[-int].push(object);
+            }
+            return order === 1
+                ? intLoop(sortedObjMin, sortedObjPlus, ascending, [], properties.slice(1))
+                : intLoop(sortedObjPlus, sortedObjMin, ascending, [], properties.slice(1));
         },
         str() { // work in progress
             return [];
@@ -264,7 +257,17 @@ const UtilintySort = function () {
             this.#resetPropertiesStatistics = true;
             const properties = this.#properties.list;
             this.#resetPropertiesStatistics = false;
-            return util___Sort[properties[0].type](1, this.#list, properties);
+            const filterMap = properties.filter(property => property.filter);
+            function filterProperty(property) {
+                const int = this[property.name];
+                const ascending = property.ascending;
+                const lowerbound = property.lowerbound;
+                const upperbound = property.upperbound;
+                return (ascending === -1 && int >= upperbound && int <= lowerbound) ||
+                    (ascending === 1 && int >= lowerbound && int <= upperbound) ||
+                    (ascending === 0 && int === lowerbound);
+            }
+            return util___Sort[properties[0].type](1, this.#list.filter(object => filterMap.every(filterProperty, object)), properties.filter(property => property.ascending !== 0));
         };
         measureSort(label = "Measuring utilintySort time") {
             console.time(label);

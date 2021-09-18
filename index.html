@@ -15,6 +15,19 @@
         window.addEventListener("load", function loadTestUtilintySort() {
             // testing array of objects down here
             const gazillionArr = [];
+            const someMap = {
+                "monkey": 0,
+                "mongol": 1,
+                "aap mongol": 2,
+                "burnd": 3,
+                "y mongol": 4,
+                "hoehoe haha": 5,
+                "throws a cookie": 6,
+                "": 7,
+                "ಠ_ಠ": 8,
+                "uhm i dunno": 9
+            };
+            const keysMap = Object.keys(someMap);
             for (let id = 0; id < 1000000; id++) {
                 const rndmRankPoints = Math.ceil(Math.random() * 100);
                 const rndmRank = Math.ceil((101 - rndmRankPoints) / 10);
@@ -33,10 +46,12 @@
                     const rndmAscii = Math.ceil(96 + Math.random() * 26);
                     rndmName += String.fromCharCode(rndmAscii);
                 }
+                const rndmValue = keysMap[Math.floor(Math.random() * 10)]
                 gazillionArr.push({
                     rank: rndmRank, rankPs: rndmRankPoints, lvl: rndmLevel,
                     id: id, cash: rndmCash, stLvl: rndmStoryLevel, gems: rndmGems,
-                    age: rndmAge, length: rndmLength, weight: rndmWeight, name: rndmName
+                    age: rndmAge, length: rndmLength, weight: rndmWeight, name: rndmName,
+                    value: rndmValue
                 });
             }
             console.log('gazillionArr (1 million size array of objects):\n', gazillionArr, '\n');
@@ -143,7 +158,6 @@
             utilintySort.properties.get('lvl').setRange(200, 300); // (ascending = 1 OR 200<=lvl<=300)
             utilintySort.properties.get('cash').setRange(5000, 2500); // (ascending = -1 OR 5000<=lvl<=2500)
             utilintySort.properties.get('age').setValue(26); // (ascending = 0 OR 26=age=26 AND sortIndex 6th->1st)
-            // utilintySort.properties.add("name").sortIndex = 1;
             //*
             high = 0;
             low = 1000;
@@ -164,9 +178,31 @@
             console.log('avarage:', avg / timesTesting, 'milliseconds');
             console.log('\n\n');
             //*/
-            utilintySort.properties.get(7).setValue(60);
-            utilintySort.properties.get(1).setRange(10, 20);
 
+
+            // Test 4: utilintySort 9 properties with ranges
+            utilintySort.properties.add("value").intMap = someMap;
+            utilintySort.properties.get("value").sortIndex = 0;
+            //*
+            high = 0;
+            low = 1000;
+            avg = 0;
+            for (let i = 0; i < timesTesting; i++) {
+                const t0 = performance.now();
+                sorted = utilintySort.sort();
+                const t1 = performance.now() - t0;
+                avg += t1;
+                if (low > t1) low = t1;
+                if (high < t1) high = t1;
+            }
+            console.log('Test 4:    utilintySort with intMap');
+            console.log('           Sorting 9 properties by value and range (age===26, value+, 5000<=cash<=2500, gems-, 200<=lvl<=300, stLvl+, rankPs-, length-, weight+, id+)');
+            console.log(sorted);
+            console.log('slowest:', high, 'milliseconds');
+            console.log('fastest:', low, 'milliseconds');
+            console.log('avarage:', avg / timesTesting, 'milliseconds');
+            console.log('\n\n');
+            //*/
 
 
             window.utilintySort = utilintySort;
