@@ -143,6 +143,7 @@
             utilintySort.properties.get('lvl').setRange(200, 300); // (ascending = 1 OR 200<=lvl<=300)
             utilintySort.properties.get('cash').setRange(5000, 2500); // (ascending = -1 OR 5000<=lvl<=2500)
             utilintySort.properties.get('age').setValue(26); // (ascending = 0 OR 26=age=26 AND sortIndex 6th->1st)
+            // utilintySort.properties.add("name").sortIndex = 1;
             //*
             high = 0;
             low = 1000;
@@ -167,8 +168,11 @@
             utilintySort.properties.get(1).setRange(10, 20);
 
 
+
             window.utilintySort = utilintySort;
             console.log(utilintySort);
+
+
         });
     </script>
 </body>
