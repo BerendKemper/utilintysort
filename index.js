@@ -173,18 +173,19 @@ const UtilintySort = function () {
         }
     }
     function sortedLoop(sortedObjFirst, sortedObjSecond, ascending, sorted, nextprops) {
+        const utilSort = nextprops.length > 0 ? util___Sort[nextprops[0].type] : null;
         const sortedArraysFirst = Object.values(sortedObjFirst);
         for (let int = sortedArraysFirst.length - 1; int >= 0; int--) {
             let sortedArrayFirst = sortedArraysFirst[int];
-            if (nextprops.length > 0 && sortedArrayFirst.length > 1)
-                sortedArrayFirst = util___Sort[nextprops[0].type](ascending, sortedArrayFirst, nextprops);
+            if (utilSort && sortedArrayFirst.length > 1)
+                sortedArrayFirst = utilSort(ascending, sortedArrayFirst, nextprops);
             for (let i = sortedArrayFirst.length - 1; i >= 0; i--)
                 sorted.push(sortedArrayFirst[i]);
         }
         for (let int in sortedObjSecond) {
             let sortedArraySecond = sortedObjSecond[int];
-            if (nextprops.length > 0 && sortedArraySecond.length > 1)
-                sortedArraySecond = util___Sort[nextprops[0].type](ascending, sortedArraySecond, nextprops);
+            if (utilSort && sortedArraySecond.length > 1)
+                sortedArraySecond = utilSort(ascending, sortedArraySecond, nextprops);
             for (let i = 0; i < sortedArraySecond.length; i++)
                 sorted.push(sortedArraySecond[i]);
         }
