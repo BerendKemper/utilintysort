@@ -242,7 +242,17 @@ const UtilintySort = function () {
             return [];
         }
     }
-
+    function filterProperty(property) {
+        const int = property.type === "map"
+            ? property.intMap[this[property.name]]
+            : this[property.name];
+        const ascending = property.ascending;
+        const lowerbound = property.lowerbound;
+        const upperbound = property.upperbound;
+        return (ascending === -1 && int >= upperbound && int <= lowerbound) ||
+            (ascending === 1 && int >= lowerbound && int <= upperbound) ||
+            (ascending === 0 && int === lowerbound);
+    }
     class UtilintySort {
         #list;
         #properties;
@@ -258,15 +268,6 @@ const UtilintySort = function () {
             const properties = this.#properties.list;
             this.#resetPropertiesStatistics = false;
             const filterMap = properties.filter(property => property.filter);
-            function filterProperty(property) {
-                const int = this[property.name];
-                const ascending = property.ascending;
-                const lowerbound = property.lowerbound;
-                const upperbound = property.upperbound;
-                return (ascending === -1 && int >= upperbound && int <= lowerbound) ||
-                    (ascending === 1 && int >= lowerbound && int <= upperbound) ||
-                    (ascending === 0 && int === lowerbound);
-            }
             return util___Sort[properties[0].type](1, filterMap.length > 0 ? this.#list.filter(object => filterMap.every(filterProperty, object)) : this.#list, properties.filter(property => property.ascending !== 0));
         };
         measureSort(label = "Measuring utilintySort time") {
