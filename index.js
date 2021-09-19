@@ -267,7 +267,7 @@ const UtilintySort = function () {
                     (ascending === 1 && int >= lowerbound && int <= upperbound) ||
                     (ascending === 0 && int === lowerbound);
             }
-            return util___Sort[properties[0].type](1, this.#list.filter(object => filterMap.every(filterProperty, object)), properties.filter(property => property.ascending !== 0));
+            return util___Sort[properties[0].type](1, filterMap.length > 0 ? this.#list.filter(object => filterMap.every(filterProperty, object)) : this.#list, properties.filter(property => property.ascending !== 0));
         };
         measureSort(label = "Measuring utilintySort time") {
             console.time(label);
