@@ -11,6 +11,8 @@
 <body>
     <h1>UtilintySort</h1>
     <script src="./index.js"></script>
+    <script src="./merge-sort.js"></script>
+    <script src="./quicksort.js"></script>
     <script>
         window.addEventListener("load", function loadTestUtilintySort() {
             // testing array of objects down here
@@ -83,7 +85,7 @@
             }
             console.log('Test 0:    utilintySort');
             console.log('           Sorting 1 property (cash-)');
-            // console.log(sorted);
+            console.log(sorted);
             console.log('slowest:', high, 'milliseconds');
             console.log('fastest:', low, 'milliseconds');
             console.log('avarage:', avg / timesTesting, 'milliseconds\n');
@@ -110,7 +112,7 @@
             }
             console.log('Test 1:    Array-sort');
             console.log('           Sorting 1 property (cash-)');
-            // console.log(sorted);
+            console.log(sorted);
             console.log('slowest:', high, 'milliseconds');
             console.log('fastest:', low, 'milliseconds');
             console.log('avarage:', avg / timesTesting, 'milliseconds\n');
@@ -118,6 +120,56 @@
             //*/
 
 
+
+
+            // Test 1: Merge-sort 1 property
+            //*
+            high = 0;
+            low = 1000;
+            avg = 0;
+            for (let i = 0; i < timesTesting; i++) {
+                const unsorted = Array.from(gazillionArr);
+                const t0 = performance.now();
+                mergeSort(unsorted, "cash");
+                const t1 = performance.now() - t0;
+                avg += t1;
+                if (low > t1) low = t1;
+                if (high < t1) high = t1;
+            }
+            console.log('Test 1:    Merge-sort');
+            console.log('           Sorting 1 property (cash-)');
+            console.log(sorted);
+            console.log('slowest:', high, 'milliseconds');
+            console.log('fastest:', low, 'milliseconds');
+            console.log('avarage:', avg / timesTesting, 'milliseconds\n');
+            console.log('\n');
+            //*/
+
+
+
+
+            // Test 1: Quicksort 1 property
+            //*
+            high = 0;
+            low = 1000;
+            avg = 0;
+            for (let i = 0; i < timesTesting; i++) {
+                const unsorted = Array.from(gazillionArr);
+                const t0 = performance.now();
+                quickSort(unsorted, 0, unsorted.length - 1, "cash");
+                const t1 = performance.now() - t0;
+                avg += t1;
+                if (low > t1) low = t1;
+                if (high < t1) high = t1;
+            }
+            console.log('Test 1:    Quicksort');
+            console.log('           Sorting 1 property (cash-)');
+            console.log(sorted);
+            console.log('slowest:', high, 'milliseconds');
+            console.log('fastest:', low, 'milliseconds');
+            console.log('avarage:', avg / timesTesting, 'milliseconds\n');
+            console.log('\n');
+            //*/
 
 
 

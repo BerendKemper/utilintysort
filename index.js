@@ -268,7 +268,10 @@ const UtilintySort = function () {
             const properties = this.#properties.list;
             this.#resetPropertiesStatistics = false;
             const filterMap = properties.filter(property => property.filter);
-            return util___Sort[properties[0].type](1, filterMap.length > 0 ? this.#list.filter(object => filterMap.every(filterProperty, object)) : this.#list, properties.filter(property => property.ascending !== 0));
+            return util___Sort[properties[0].type](1, filterMap.length > 0
+                ? this.#list.filter(object => filterMap.every(filterProperty, object))
+                : this.#list, properties.filter(property => property.ascending !== 0)
+            );
         };
         measureSort(label = "Measuring utilintySort time") {
             console.time(label);
